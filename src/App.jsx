@@ -8,7 +8,7 @@ import { useWallpapers } from './hooks/useWallpapers';
 function App() {
   const {
     images, isLoading, error, searchQuery,
-    settings, generate, toggleLike, isLiked, updateSettings, clearError,
+    settings, generate, toggleLike, isLiked, updateSettings, clearError, clearImages,
   } = useWallpapers();
   
   const [currentView, setCurrentView] = useState('home');
@@ -44,9 +44,17 @@ function App() {
     generate(prompt);
   };
 
+  const handleViewChange = (view) => {
+    if (view === 'home') {
+      // If they click home, completely reset back to the Hero screen
+      clearImages();
+    }
+    setCurrentView(view);
+  };
+
   return (
     <div className="min-h-screen bg-black">
-      <Navbar currentView={currentView} onViewChange={setCurrentView} />
+      <Navbar currentView={currentView} onViewChange={handleViewChange} />
 
       {currentView === 'home' && images.length === 0 && !isLoading && (
         <Hero onSearch={handleSearch} settings={settings} onSettingsChange={updateSettings} />

@@ -78,8 +78,13 @@ export const useWallpapers = () => {
 
   const clearError = useCallback(() => setError(null), []);
 
+  const clearImages = useCallback(() => {
+    setImages([]);
+    setSearchQuery('');
+  }, []);
+
   return {
     images, isLoading, error, searchQuery, searchHistory,
-    settings, generate, toggleLike, isLiked, updateSettings, clearError,
+    settings, generate, toggleLike, isLiked, updateSettings, clearError, clearImages,
   };
 };
