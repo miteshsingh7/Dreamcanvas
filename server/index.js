@@ -78,6 +78,15 @@ app.post('/api/generate', async (req, res) => {
   }
 });
 
+// Serve static frontend files
+const distPath = path.join(__dirname, '../dist');
+app.use(express.static(distPath));
+
+// Catch-all route to serve the React frontend for any unknown routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'));
+});
+
 app.listen(PORT, () => {
-  console.log(`Backend proxy server running on http://localhost:${PORT}`);
+  console.log(`Backend proxy server running on port ${PORT}`);
 });
